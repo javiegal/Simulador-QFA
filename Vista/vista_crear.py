@@ -48,7 +48,7 @@ class VistaCrear(tk.Frame):
         ejemplos_label = tk.Label(frame2, text='Seleccionar ejemplo:')
         ejemplos_label.grid(row=0, column=6, padx=5, pady=5, sticky='e')
 
-        self.ejemplos = ['MOD3', 'MOD7', 'a*b*', 'NEQ', 'i', 's1', 's2']
+        self.ejemplos = ['MOD3', 'MOD7', 'a*b*', 'NEQ', 'i', 's1', 's2', 'Ej. MMQFA']
         self.ejemplos_box = ttk.Combobox(frame2, state='readonly', width=10)
         self.ejemplos_box.grid(row=0, column=7, padx=5)
         self.ejemplos_box['values'] = self.ejemplos

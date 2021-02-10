@@ -56,7 +56,7 @@ class VistaSimular(tk.Frame):
         frame_text.grid_columnconfigure(0, weight=1)
 
         self.grid_columnconfigure(1, weight=1)
-        self.grid_rowconfigure(3, weight=1)
+        self.grid_rowconfigure(2, weight=1)
 
     def set_controlador(self, controlador):
         self.controlador = controlador

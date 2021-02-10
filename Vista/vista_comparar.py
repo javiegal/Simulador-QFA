@@ -54,6 +54,7 @@ class VistaComparar(tk.Frame):
         self.label_conformidad.grid(row=2, column=0, columnspan=2, padx=5, sticky='w')
 
         self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
 
     def set_controlador(self, controlador):
         self.controlador = controlador

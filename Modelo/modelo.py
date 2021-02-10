@@ -225,3 +225,22 @@ class Modelo:
             aceptacion[0, 0] = 0
 
             self.qfas[id_qfa] = MOQFA(dim, estado_inicial, transformaciones, [aceptacion])
+
+        elif nombre == 'Ej. MMQFA':
+            dim = 4
+
+            transformaciones = {
+                'a': Matrix([['1/2', '1/2', '0', '1/sqrt(2)'], ['1/2', '1/2', '0', '-1/sqrt(2)'], ['0', '0', '1', '0'],
+                             ['1/sqrt(2)', '-1/sqrt(2)', '0', '0']])}
+
+            end_transf = Matrix([[0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0], [1, 0, 0, 0]])
+            estado_inicial = Matrix([1, 0, 0, 0])
+            acc = zeros(dim)
+            acc[2, 2] = 1
+            non = zeros(dim)
+            non[0, 0] = 1
+            non[1, 1] = 1
+            rej = zeros(dim)
+            rej[3, 3] = 1
+
+            self.qfas[id_qfa] = MMQFA(dim, estado_inicial, transformaciones, [acc, rej, non], end_transf)
