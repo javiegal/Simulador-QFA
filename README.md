@@ -1,3 +1,9 @@
 # Simulador-QFA
 
-Simulador de autómatas finitos cuánticos desarrollado como parte del Trabajo de Fin de Grado de Informática dentro del Doble Grado en Matemáticas e Ingeniería Informática de la Universidad Complutense de Madrid. El trabajo realizado se expone con mayor detalle en los documentos memoria_inf.pdf y memoria_mat.pdf correspondientes a las memorias de los TFGs en Informática y Matemáticas, respectivamente.
+## Description
+Simulador de autómatas finitos cuánticos desarrollado como parte del Trabajo de Fin de Grado en Ingeniéria Informática dentro del Doble Grado en Matemáticas e Ingeniería Informática de la Universidad Complutense de Madrid. 
+
+Una descripción más detallada del trabajo realizado puede verse en la [memoria del Trabajo de Fin de Grado en Matemáticas](memoria_mat.pdf) y en la [memoria del Trabajo de Fin de Grado en Ingeniería Informática](memoria_inf.pdf).
+
+## Usage
+
