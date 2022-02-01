@@ -8,7 +8,8 @@ class QFA:
     Clase que representa un autómata finito cuántico
     """
 
-    def __init__(self, dim: int = 3, estado_inicial: Matrix = None, transformaciones: Dict[chr, Matrix] = None,
+    def __init__(self, dim: int = 3, estado_inicial: Matrix = None,
+                 transformaciones: Dict[chr, Matrix] = None,
                  observable: List[Matrix] = None):
         if transformaciones is None:
             transformaciones = {}
@@ -51,20 +52,24 @@ class QFA:
 
     def evaluar_matrices(self):
         """
-        Evalua las matrices del autómata. Necesario para un procesamiento de palabras más rápido
+        Evalua las matrices del autómata. Necesario para un procesamiento de
+        palabras más rápido
         :return:
         """
         self.estado_inicial = self.estado_inicial.evalf()
-        self.transformaciones = {simbolo: transformacion.evalf() for simbolo, transformacion in
+        self.transformaciones = {simbolo: transformacion.evalf() for
+                                 simbolo, transformacion in
                                  self.transformaciones.items()}
-        self.observable = [proyeccion.evalf() for proyeccion in self.observable]
+        self.observable = [proyeccion.evalf() for proyeccion in
+                           self.observable]
 
     def get_transformacion(self, simbolo: chr):
         return self.transformaciones[simbolo]
 
     def comprobar_unitaria(self, simbolo: chr) -> bool:
         """
-        Comprueba que la matriz de la transformación asociada al símbolo sea unitaria
+        Comprueba que la matriz de la transformación asociada al símbolo sea
+        unitaria
         :param simbolo:
         :return:
         """
@@ -83,6 +88,7 @@ class QFA:
         :return:
         """
         for matriz in self.observable:
-            if not matriz.is_square or not matriz.equals(Dagger(matriz)) or not matriz.equals(matriz ** 2):
+            if not matriz.is_square or not matriz.equals(
+                    Dagger(matriz)) or not matriz.equals(matriz ** 2):
                 return False
         return True

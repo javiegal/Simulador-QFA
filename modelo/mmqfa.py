@@ -1,4 +1,4 @@
-from Modelo.qfa import QFA
+from modelo.qfa import QFA
 from sympy.physics.quantum.dagger import Dagger
 from sympy.matrices import eye, Matrix, zeros
 
@@ -19,8 +19,8 @@ class MMQFA(QFA):
 
     def leer_palabra(self, palabra: str):
         """
-        Lee una palabra del modo en que lo hacen los autómatas measure many: tras la aplicación de una transformación
-        unitaria se hace una medición
+        Lee una palabra del modo en que lo hacen los autómatas measure many:
+        tras la aplicación de una transformación unitaria se hace una medición
         :param palabra: compuesta por símbolos del autómata (menos $)
         :return: probabilidad de aceptación de la palabra
         """
@@ -67,16 +67,19 @@ class MMQFA(QFA):
 
     def comprobar_observable(self) -> bool:
         mismo_tam = all(
-            [self.observable[i].shape == self.observable[i + 1].shape for i in range(len(self.observable) - 1)])
+            [self.observable[i].shape == self.observable[i + 1].shape for i in
+             range(len(self.observable) - 1)])
         if mismo_tam:
             son_proyecciones = self.comprobar_proy()
-            # Se comprueba si las matrices representan subespacios complementarios y suman el total
+            # Se comprueba si las matrices representan subespacios
+            # complementarios y suman el total
             dim = self.observable[0].shape[0]
             zero = zeros(dim)
             complementarias = True
             for i in range(len(self.observable)):
                 for j in range(i + 1, len(self.observable)):
-                    complementarias = complementarias and self.observable[i] * self.observable[j] == zero
+                    complementarias = complementarias and self.observable[i] * \
+                        self.observable[j] == zero
             suma = self.observable[0] + self.observable[1] + self.observable[2]
             return son_proyecciones and complementarias and suma == eye(dim)
         else:

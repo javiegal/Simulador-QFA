@@ -4,8 +4,10 @@ from tkinter import ttk
 
 class VistaSimular(tk.Frame):
     """
-    Frame que permite simular un autómata introduciendo palabras y mostrando la probabilidad de aceptación de las mismas
+    Frame que permite simular un autómata introduciendo palabras y mostrando la
+    probabilidad de aceptación de las mismas
     """
+
     def __init__(self, parent, controlador, id_qfa=0):
         super().__init__(parent)
 
@@ -13,7 +15,8 @@ class VistaSimular(tk.Frame):
         self.controlador = controlador
         self.alfabeto = []
 
-        self.boton_atras = tk.Button(self, text='<', command=self.master.mostrar_inicio)
+        self.boton_atras = tk.Button(self, text='<',
+                                     command=self.master.mostrar_inicio)
         self.boton_atras.grid(row=0, column=0, padx=5, pady=5, sticky='nsw')
 
         frame_palabra = tk.LabelFrame(self, text='Ejecutar una palabra')
@@ -22,7 +25,8 @@ class VistaSimular(tk.Frame):
         self.entry_palabra = tk.StringVar()
         self.entry_palabra.trace("w", self.limitar_entrada)
         entry = tk.Entry(frame_palabra, textvariable=self.entry_palabra)
-        palabra_button = tk.Button(frame_palabra, text='Ejecutar', command=self.simular_palabra)
+        palabra_button = tk.Button(frame_palabra, text='Ejecutar',
+                                   command=self.simular_palabra)
         self.alfabeto_label = tk.Label(frame_palabra, text='')
 
         palabra_label.grid(row=0, column=0, padx=5)
@@ -33,8 +37,11 @@ class VistaSimular(tk.Frame):
         frame_comb = tk.LabelFrame(self, text='Ejecutar varias palabras')
         var = tk.StringVar(frame_comb)
         var.set('3')
-        self.tam_spinbox = tk.Spinbox(frame_comb, from_=2, to=15, justify='right', textvariable=var, width=3)
-        comb_button = tk.Button(frame_comb, text='Ejecutar', command=self.simular_comb)
+        self.tam_spinbox = tk.Spinbox(frame_comb, from_=2, to=15,
+                                      justify='right', textvariable=var,
+                                      width=3)
+        comb_button = tk.Button(frame_comb, text='Ejecutar',
+                                command=self.simular_comb)
         comb_label = tk.Label(frame_comb, text='Tamaño máximo:')
 
         self.tam_spinbox.grid(row=0, column=1)
@@ -48,9 +55,11 @@ class VistaSimular(tk.Frame):
         self.text.grid(row=0, column=0, sticky='nsew')
         scrollbar.grid(row=0, column=1, sticky='ns')
 
-        frame_text.grid(row=2, column=0, columnspan=2, pady=5, padx=5, sticky='nsew')
+        frame_text.grid(row=2, column=0, columnspan=2, pady=5, padx=5,
+                        sticky='nsew')
         frame_palabra.grid(row=0, column=1, pady=5, padx=5, sticky='nsew')
-        frame_comb.grid(row=1, column=0, columnspan=2, pady=10, padx=5, sticky='nsew')
+        frame_comb.grid(row=1, column=0, columnspan=2, pady=10, padx=5,
+                        sticky='nsew')
 
         frame_text.grid_rowconfigure(0, weight=1)
         frame_text.grid_columnconfigure(0, weight=1)
@@ -63,7 +72,8 @@ class VistaSimular(tk.Frame):
 
     def set_alfabeto(self, alfabeto):
         """
-        Muestra el alfabeto con el que se pueden construir las palabras que puede procesar el autómata
+        Muestra el alfabeto con el que se pueden construir las palabras que
+        puede procesar el autómata
         :param alfabeto:
         :return:
         """
@@ -79,25 +89,38 @@ class VistaSimular(tk.Frame):
 
     def simular_palabra(self):
         """
-        Lee la palabra escrita y escribe la probabilidad de aceptación de la misma
+        Lee la palabra escrita y escribe la probabilidad de aceptación de la
+        misma
         :return:
         """
         palabra = self.entry_palabra.get()
         probabilidad = self.controlador.simular_palabra(palabra, self.id_qfa)
         self.text.configure(state='normal')
-        self.text.insert('end', palabra + ', probabilidad de aceptación: ' + f'{float(probabilidad): .2f}' + '\n')
+        self.text.insert(
+            'end',
+            palabra +
+            ', probabilidad de aceptación: ' +
+            f'{float(probabilidad): .2f}' +
+            '\n')
         self.text.configure(state='disabled')
 
     def simular_comb(self):
         """
-        Lee todas las palabras hasta la longitud establecida y escribe las probabilidades de aceptación de cada una
+        Lee todas las palabras hasta la longitud establecida y escribe las
+        probabilidades de aceptación de cada una
         :return:
         """
         maximo = int(self.tam_spinbox.get())
-        probabilidades = self.controlador.simular_combinaciones(maximo, self.id_qfa)
+        probabilidades = self.controlador.simular_combinaciones(maximo,
+                                                                self.id_qfa)
         for k, v in probabilidades.items():
             self.text.configure(state='normal')
-            self.text.insert('end', k + ', probabilidad de aceptación: ' + f'{float(v): .2f}' + '\n')
+            self.text.insert(
+                'end',
+                k +
+                ', probabilidad de aceptación: ' +
+                f'{float(v): .2f}' +
+                '\n')
             self.text.configure(state='disabled')
 
     def limitar_entrada(self, *args):

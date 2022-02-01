@@ -1,6 +1,6 @@
 from controlador import Controlador
-from Modelo.modelo import Modelo
-from Vista.ui import UI
+from modelo.modelo import Modelo
+from vista.ui import UI
 
 
 def main():

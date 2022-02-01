@@ -1,13 +1,14 @@
-from Vista.vista_inicio import VistaInicio
-from Vista.vista_simular import VistaSimular
-from Vista.vista_comparar import VistaComparar
+from vista.vista_inicio import VistaInicio
+from vista.vista_simular import VistaSimular
+from vista.vista_comparar import VistaComparar
 import tkinter as tk
 
 
 class UI(tk.Tk):
     """
-    Interfaz de la aplicación con tres frames: el inicial de creación de autómatas, el de simulación de un autómata y
-    el de comparación de dos autómatas
+    Interfaz de la aplicación con tres frames: el inicial de creación de a
+    utómatas, el de simulación de un autómata y el de comparación de dos
+    autómatas
     """
 
     def __init__(self, num_automatas, controlador=None):
@@ -65,6 +66,9 @@ class UI(tk.Tk):
         self.frame_inicio.grid(row=1, column=0, sticky="nsew")
         self.actual = self.frame_inicio
 
-    def actualizar_automata(self, id_qfa, dim=None, tipo=None, s_init=None, simbolo=None, transformacion=None,
+    def actualizar_automata(self, id_qfa, dim=None, tipo=None, s_init=None,
+                            simbolo=None, transformacion=None,
                             observable=None, alfabeto=None):
-        self.frame_inicio.actualizar_automata(id_qfa, dim, tipo, s_init, simbolo, transformacion, observable, alfabeto)
+        self.frame_inicio.actualizar_automata(id_qfa, dim, tipo, s_init,
+                                              simbolo, transformacion,
+                                              observable, alfabeto)

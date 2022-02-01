@@ -7,6 +7,7 @@ class MatrizEntrada(tk.Frame):
     """
     Frame para introducir una matriz
     """
+
     def __init__(self, master, num_filas, num_cols, matriz, state='normal'):
         super().__init__(master)
 

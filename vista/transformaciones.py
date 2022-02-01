@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from Vista.matriz_entrada import MatrizEntrada
+from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import eye
 
 
@@ -9,6 +9,7 @@ class Transformaciones(tk.LabelFrame):
     """
     Frame para introducir el alfabeto y las transformaciones unitarias
     """
+
     def __init__(self, master, dim, tipo, controlador, id_qfa):
         super().__init__(master, text='Alfabeto y transformaciones unitarias')
         self.dim = dim
@@ -22,30 +23,40 @@ class Transformaciones(tk.LabelFrame):
 
         frame_alfabeto = tk.Frame(self)
         scrollbar = ttk.Scrollbar(frame_alfabeto, orient='vertical')
-        self.alfabeto = tk.Listbox(frame_alfabeto, height=5, width=30, selectmode='single',
-                                   yscrollcommand=scrollbar.set, exportselection=False)
+        self.alfabeto = tk.Listbox(frame_alfabeto, height=5, width=30,
+                                   selectmode='single',
+                                   yscrollcommand=scrollbar.set,
+                                   exportselection=False)
         scrollbar.config(command=self.alfabeto.yview)
         self.alfabeto.grid(row=0, column=0, sticky='nsew')
         self.alfabeto.bind('<<ListboxSelect>>', self.cambiar_seleccion)
         scrollbar.grid(row=0, column=1, sticky='ns')
-        frame_alfabeto.grid(row=1, column=0, columnspan=3, pady=5, padx=5, sticky='nsew')
+        frame_alfabeto.grid(row=1, column=0, columnspan=3, pady=5, padx=5,
+                            sticky='nsew')
         frame_alfabeto.grid_rowconfigure(0, weight=1)
 
         self.entry_char = tk.StringVar()
-        entry_simbolo = tk.Entry(frame_anadir, textvariable=self.entry_char, width=10)
+        entry_simbolo = tk.Entry(frame_anadir, textvariable=self.entry_char,
+                                 width=10)
 
         self.entry_char.trace("w", self.limitar_caracteres)
 
-        self.anadir_simbolo = tk.Button(frame_anadir, text='Añadir', command=self.insertar_simbolo)
-        self.boton_eliminar_simbolo = tk.Button(self, text='Eliminar', state='disabled', command=self.eliminar_simbolo)
-        self.dolar = tk.Button(self, text='Transformación $', command=self.cambiar_seleccion_dolar)
+        self.anadir_simbolo = tk.Button(frame_anadir, text='Añadir',
+                                        command=self.insertar_simbolo)
+        self.boton_eliminar_simbolo = tk.Button(self, text='Eliminar',
+                                                state='disabled',
+                                                command=self.eliminar_simbolo)
+        self.dolar = tk.Button(self, text='Transformación $',
+                               command=self.cambiar_seleccion_dolar)
 
         self.transf_label = tk.Label(self, text='', font=("TkDefaultFont", 10))
         self.transf_label.grid(row=0, column=3, sticky='nsew')
 
         identidad = eye(self.dim)
-        self.matriz = MatrizEntrada(self, self.dim, self.dim, identidad, state='disabled')
-        self.check_unitaria = tk.Button(self, text='Comprobar unitaria', command=self.comprobar_matriz_unitaria,
+        self.matriz = MatrizEntrada(self, self.dim, self.dim, identidad,
+                                    state='disabled')
+        self.check_unitaria = tk.Button(self, text='Comprobar unitaria',
+                                        command=self.comprobar_matriz_unitaria,
                                         state='disabled')
 
         self.matriz.grid(row=1, column=3, padx=20, pady=5, sticky='nsew')
@@ -67,7 +78,8 @@ class Transformaciones(tk.LabelFrame):
 
     def limitar_caracteres(self, *args):
         """
-        Limita a uno el número de símbolos que se pueden introducir e impide introducir '$' si es un MMQFA
+        Limita a uno el número de símbolos que se pueden introducir e impide
+        introducir '$' si es un MMQFA
         :param args:
         :return:
         """
@@ -105,19 +117,22 @@ class Transformaciones(tk.LabelFrame):
         :param cambiar_dim:
         :return:
         """
-        self.transf_label.config(text='Transformación asociada al símbolo ' + simbolo)
+        self.transf_label.config(
+            text='Transformación asociada al símbolo ' + simbolo)
         self.matriz.set_state(state='normal')
         self.cambiar_matriz(transformacion, cambiar_dim)
         self.seleccionado = simbolo
         if self.tipo != 'MMQFA' or self.seleccionado != '$':
-            self.alfabeto.selection_set(self.alfabeto.get(0, 'end').index(self.seleccionado))
+            self.alfabeto.selection_set(
+                self.alfabeto.get(0, 'end').index(self.seleccionado))
 
         self.boton_eliminar_simbolo.configure(state='normal')
         self.check_unitaria.configure(state='normal')
 
     def insertar_simbolo(self):
         """
-        Inserta un símbolo en el alfabeto y selecciona la matriz para ese símbolo
+        Inserta un símbolo en el alfabeto y selecciona la matriz para ese
+        símbolo
         :return:
         """
         # Añadir símbolo en la listbox del alfabeto
@@ -127,7 +142,8 @@ class Transformaciones(tk.LabelFrame):
 
             # Añadir la transformación asociada al símbolo
             identidad = eye(self.dim)
-            self.controlador.anadir_transformacion(simbolo, identidad, self.id_qfa)
+            self.controlador.anadir_transformacion(simbolo, identidad,
+                                                   self.id_qfa)
 
             # Seleccionar el nuevo elemento
             self.alfabeto.selection_clear(0, 'end')
@@ -136,13 +152,15 @@ class Transformaciones(tk.LabelFrame):
 
     def guardar_matriz_actual(self):
         """
-        Llama al controlador para guardar la matriz mostrada como transformación asociada al símbolo seleccionado
+        Llama al controlador para guardar la matriz mostrada como
+        transformación asociada al símbolo seleccionado
         :return:
         """
         if self.seleccionado is not None:
             try:
                 matriz = self.matriz.get_matriz_ev()
-                self.controlador.anadir_transformacion(self.seleccionado, matriz, self.id_qfa)
+                self.controlador.anadir_transformacion(self.seleccionado,
+                                                       matriz, self.id_qfa)
             except SyntaxError as e:
                 raise e
 
@@ -161,7 +179,8 @@ class Transformaciones(tk.LabelFrame):
 
     def cambiar_seleccion(self, event):
         """
-        Cambia la selección de símbolo, mostrando la transformación del símbolo seleccionado
+        Cambia la selección de símbolo, mostrando la transformación del símbolo
+        seleccionado
         :param event:
         :return:
         """
@@ -174,7 +193,8 @@ class Transformaciones(tk.LabelFrame):
             simbolo = self.alfabeto.get(seleccionado)
 
             # Mostrar la transformación
-            transformacion = self.controlador.get_transformacion(simbolo, self.id_qfa)
+            transformacion = self.controlador.get_transformacion(simbolo,
+                                                                 self.id_qfa)
             self.mostrar_transformacion(simbolo, transformacion, False)
 
     def eliminar_simbolo(self):
@@ -201,12 +221,16 @@ class Transformaciones(tk.LabelFrame):
         """
         try:
             self.guardar_matriz_actual()
-            if self.controlador.comprobar_unitaria(self.seleccionado, self.id_qfa):
-                messagebox.showinfo(message='La matriz introducida es unitaria')
+            if self.controlador.comprobar_unitaria(self.seleccionado,
+                                                   self.id_qfa):
+                messagebox.showinfo(
+                    message='La matriz introducida es unitaria')
             else:
-                messagebox.showerror(message='La matriz introducida no es unitaria')
+                messagebox.showerror(
+                    message='La matriz introducida no es unitaria')
         except SyntaxError:
-            messagebox.showerror(message='La matriz introducida no es correcta')
+            messagebox.showerror(
+                message='La matriz introducida no es correcta')
 
     def escribir_alfabeto(self, alfabeto):
         """
@@ -221,14 +245,16 @@ class Transformaciones(tk.LabelFrame):
 
     def cambiar_matriz(self, matriz, cambiar_dim):
         """
-        Actualiza el frame de la matriz a mostrar, creándolo de nuevo en caso de que se haya actualizado la dimensión
+        Actualiza el frame de la matriz a mostrar, creándolo de nuevo en caso
+        de que se haya actualizado la dimensión
         :param matriz:
         :param cambiar_dim:
         :return:
         """
         if cambiar_dim:
             state = self.matriz.get_state()
-            self.matriz = MatrizEntrada(self, self.dim, self.dim, matriz, state=state)
+            self.matriz = MatrizEntrada(self, self.dim, self.dim, matriz,
+                                        state=state)
             self.matriz.grid_forget()
             self.matriz.grid(row=1, column=3, padx=20, pady=5, sticky='nsew')
         else:

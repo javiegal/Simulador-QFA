@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter import messagebox
-from Vista.matriz_entrada import MatrizEntrada
+from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import eye
 
 
 class Aceptacion(tk.LabelFrame):
     """
-    Frame para introducir la regla de aceptación, es decir, los subespacios necesarios del observable
+    Frame para introducir la regla de aceptación, es decir, los subespacios
+    necesarios del observable
     """
 
     def __init__(self, parent, dim, tipo, controlador, id_qfa):
@@ -41,7 +42,8 @@ class Aceptacion(tk.LabelFrame):
         self.set_estado_subs(state)
 
         # Botón para comprobar que el observable es correcto
-        check_button = tk.Button(self, text='Comprobar observable', command=self.comprobar_observable)
+        check_button = tk.Button(self, text='Comprobar observable',
+                                 command=self.comprobar_observable)
         check_button.grid(row=3, column=1, pady=5)
 
         self.grid_rowconfigure(2, weight=1)
@@ -57,7 +59,8 @@ class Aceptacion(tk.LabelFrame):
 
     def set_tipo(self, tipo):
         """
-        Establece el tipo de autómata y habilita o deshabilita las opciones según el caso
+        Establece el tipo de autómata y habilita o deshabilita las opciones
+        según el caso
         :param tipo:
         :return:
         """
@@ -79,14 +82,16 @@ class Aceptacion(tk.LabelFrame):
             if self.tipo == 'MOQFA':
                 return [self.matriz_acc.get_matriz_ev()]
             else:
-                return [self.matriz_acc.get_matriz_ev(), self.matriz_rej.get_matriz_ev(),
+                return [self.matriz_acc.get_matriz_ev(),
+                        self.matriz_rej.get_matriz_ev(),
                         self.matriz_non.get_matriz_ev()]
         except SyntaxError as e:
             raise e
 
     def comprobar_observable(self):
         """
-        Muestra la ventana correspondiente en función de si el observable es correcto o no
+        Muestra la ventana correspondiente en función de si el observable es
+        correcto o no
         :return:
         """
         try:
@@ -96,7 +101,8 @@ class Aceptacion(tk.LabelFrame):
             else:
                 messagebox.showerror(message='Observable incorrecto')
         except SyntaxError:
-            messagebox.showerror(message='Error: las matrices introducidas no son correctas')
+            messagebox.showerror(
+                message='Error: las matrices introducidas no son correctas')
 
     def refrescar_matrices(self):
         self.matriz_acc.grid_forget()
@@ -109,8 +115,9 @@ class Aceptacion(tk.LabelFrame):
 
     def set_subespacios(self, observable, cambiar_dim):
         """
-        Establece las matrices correspondientes a las proyecciones sobre los subespacios, creando de nuevo los frames
-        en caso de que haya que cambiar la dimensión
+        Establece las matrices correspondientes a las proyecciones sobre los
+        subespacios, creando de nuevo los frames en caso de que haya que
+        cambiar la dimensión
         :param observable:
         :param cambiar_dim:
         :return:
@@ -127,8 +134,10 @@ class Aceptacion(tk.LabelFrame):
 
         if cambiar_dim:
             self.matriz_acc = MatrizEntrada(self, self.dim, self.dim, acc)
-            self.matriz_rej = MatrizEntrada(self, self.dim, self.dim, rej, state=state)
-            self.matriz_non = MatrizEntrada(self, self.dim, self.dim, non, state=state)
+            self.matriz_rej = MatrizEntrada(self, self.dim, self.dim, rej,
+                                            state=state)
+            self.matriz_non = MatrizEntrada(self, self.dim, self.dim, non,
+                                            state=state)
 
         else:
             self.matriz_acc.set_matriz(acc)

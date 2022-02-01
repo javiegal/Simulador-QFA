@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
-from Vista.transformaciones import Transformaciones
-from Vista.aceptacion import Aceptacion
-from Vista.matriz_entrada import MatrizEntrada
+from vista.transformaciones import Transformaciones
+from vista.aceptacion import Aceptacion
+from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import Matrix, eye
 
 
 class VistaCrear(tk.Frame):
     """
-    Frame para mostrar un autómata y poder modificarlo rellenando los campos necesarios
+    Frame para mostrar un autómata y poder modificarlo rellenando los campos
+    necesarios
     """
 
     def __init__(self, master, controlador, id_qfa, dim=3, tipo='MOQFA'):
@@ -40,20 +41,24 @@ class VistaCrear(tk.Frame):
 
         var = tk.StringVar(frame2)
         var.set(str(dim))
-        self.dim_spinbox = tk.Spinbox(frame2, from_=2, to=6, justify='right', textvariable=var, width=3)
+        self.dim_spinbox = tk.Spinbox(frame2, from_=2, to=6, justify='right',
+                                      textvariable=var, width=3)
         self.dim_spinbox.grid(row=0, column=4, pady=5, padx=5)
-        boton_dimension = tk.Button(frame2, text='Establecer', command=self.cambiar_dim)
+        boton_dimension = tk.Button(frame2, text='Establecer',
+                                    command=self.cambiar_dim)
         boton_dimension.grid(row=0, column=5, padx=5)
 
         ejemplos_label = tk.Label(frame2, text='Seleccionar ejemplo:')
         ejemplos_label.grid(row=0, column=6, padx=5, pady=5, sticky='e')
 
-        self.ejemplos = ['MOD3', 'MOD7', 'a*b*', 'NEQ', 'i', 's1', 's2', 'Ej. MMQFA']
+        self.ejemplos = ['MOD3', 'MOD7', 'a*b*', 'NEQ', 'i', 's1', 's2',
+                         'Ej. MMQFA']
         self.ejemplos_box = ttk.Combobox(frame2, state='readonly', width=10)
         self.ejemplos_box.grid(row=0, column=7, padx=5)
         self.ejemplos_box['values'] = self.ejemplos
 
-        self.ejemplos_box.bind("<<ComboboxSelected>>", self.seleccionar_ejemplo)
+        self.ejemplos_box.bind("<<ComboboxSelected>>",
+                               self.seleccionar_ejemplo)
 
         self.frame_s_init = tk.Frame(self.frame_opc)
         s_init_label = tk.Label(self.frame_s_init, text='Estado inicial:')
@@ -73,11 +78,13 @@ class VistaCrear(tk.Frame):
         self.frame_opc.grid_columnconfigure(0, weight=1)
 
         # Frame transformaciones
-        self.transformaciones = Transformaciones(self, self.dim, self.tipo, self.controlador, self.id_qfa)
+        self.transformaciones = Transformaciones(self, self.dim, self.tipo,
+                                                 self.controlador, self.id_qfa)
         self.transformaciones.grid(row=1, column=0, sticky='nsew', pady=5)
 
         # Frame regla de aceptación
-        self.aceptacion = Aceptacion(self, self.dim, self.tipo, self.controlador, self.id_qfa)
+        self.aceptacion = Aceptacion(self, self.dim, self.tipo,
+                                     self.controlador, self.id_qfa)
         self.aceptacion.grid(row=2, column=0, sticky='nsew')
 
         self.grid_columnconfigure(0, weight=1)
@@ -91,7 +98,8 @@ class VistaCrear(tk.Frame):
 
     def cambiar_tipo(self, event):
         """
-        Cambia el tipo de autómata actual haciendo los cambios necesarios en la vista y llamando al controlador para
+        Cambia el tipo de autómata actual haciendo los cambios necesarios en la
+        vista y llamando al controlador para
         que actualice el modelo
         :param event:
         :return:
@@ -123,7 +131,8 @@ class VistaCrear(tk.Frame):
         self.s_init = MatrizEntrada(self.frame_s_init, 1, self.dim, vector.T)
         self.s_init.grid(row=0, column=1, padx=5, pady=5, sticky='nsew')
 
-    def mostrar_automata(self, dim, tipo, s_init, simbolo, transformacion, observable, alfabeto):
+    def mostrar_automata(self, dim, tipo, s_init, simbolo, transformacion,
+                         observable, alfabeto):
         """
         Muestra el autómata dado por las opciones recibidas
         :param dim:
@@ -154,7 +163,8 @@ class VistaCrear(tk.Frame):
             self.aceptacion.set_tipo(tipo)
 
         self.transformaciones.escribir_alfabeto(alfabeto)
-        self.transformaciones.mostrar_transformacion(simbolo, transformacion, cambiar_dim)
+        self.transformaciones.mostrar_transformacion(simbolo, transformacion,
+                                                     cambiar_dim)
         self.aceptacion.mostrar_observable(observable, cambiar_dim)
 
     def get_s_init(self):
@@ -169,7 +179,8 @@ class VistaCrear(tk.Frame):
 
     def seleccionar_ejemplo(self, event):
         """
-        Llama al controlador para actualizar el autómata según el ejemplo seleccionado
+        Llama al controlador para actualizar el autómata según el ejemplo
+        seleccionado
         :param event:
         :return:
         """
@@ -190,7 +201,8 @@ class VistaCrear(tk.Frame):
 
     def actualizar_dim_matrices(self, dim):
         """
-        Actualiza la dimensión de las matrices de las transformaciones, estado inicial y observable
+        Actualiza la dimensión de las matrices de las transformaciones, estado
+        inicial y observable
         :param dim:
         :return:
         """
@@ -199,4 +211,5 @@ class VistaCrear(tk.Frame):
         self.aceptacion.set_dim(dim)
         self.reescribir_s_init(eye(dim))
         self.transformaciones.cambiar_matriz(eye(dim), True)
-        self.aceptacion.mostrar_observable([eye(dim), eye(dim), eye(dim)], True)
+        self.aceptacion.mostrar_observable([eye(dim), eye(dim), eye(dim)],
+                                           True)
