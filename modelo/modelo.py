@@ -1,12 +1,13 @@
-from modelo.moqfa import MOQFA
-from modelo.mmqfa import MMQFA
-from modelo.qfa import QFA
 from sympy.matrices import eye, Matrix, zeros
 from sympy import real_roots, sqrt
 from sympy.abc import x
 import math
 from itertools import product
 from typing import List
+
+from .moqfa import MOQFA
+from .mmqfa import MMQFA
+from .qfa import QFA
 
 
 class Modelo:

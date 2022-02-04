@@ -1,13 +1,14 @@
-from vista.vista_inicio import VistaInicio
-from vista.vista_simular import VistaSimular
-from vista.vista_comparar import VistaComparar
 import tkinter as tk
+
+from .vista_inicio import VistaInicio
+from .vista_simular import VistaSimular
+from .vista_comparar import VistaComparar
 
 
 class UI(tk.Tk):
     """
-    Interfaz de la aplicación con tres frames: el inicial de creación de a
-    utómatas, el de simulación de un autómata y el de comparación de dos
+    Interfaz de la aplicación con tres frames: el inicial de creación de
+    autómatas, el de simulación de un autómata y el de comparación de dos
     autómatas
     """
 
@@ -16,8 +17,8 @@ class UI(tk.Tk):
 
         self.controlador = controlador
         self.title('Simulador QFA')
-        self.geometry('700x650')
-        # self.resizable(False, False)
+        self.geometry('750x650')
+        self.resizable(False, False)
 
         self.frame_inicio = VistaInicio(self, self.controlador, num_automatas)
         self.frame_simular = VistaSimular(self, self.controlador)

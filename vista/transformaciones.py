@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
-from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import eye
+
+from .matriz_entrada import MatrizEntrada
 
 
 class Transformaciones(tk.LabelFrame):

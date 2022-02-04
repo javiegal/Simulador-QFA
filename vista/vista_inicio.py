@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-from vista.vista_crear import VistaCrear
 from tkinter import messagebox
+
+from .vista_crear import VistaCrear
 
 
 class VistaInicio(tk.Frame):

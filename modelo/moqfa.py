@@ -1,6 +1,7 @@
-from modelo.qfa import QFA
 from sympy.physics.quantum.dagger import Dagger
 from sympy.matrices import eye
+
+from .qfa import QFA
 
 
 class MOQFA(QFA):

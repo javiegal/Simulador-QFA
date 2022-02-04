@@ -1,6 +1,7 @@
-from modelo.qfa import QFA
 from sympy.physics.quantum.dagger import Dagger
 from sympy.matrices import eye, Matrix, zeros
+
+from .qfa import QFA
 
 
 class MMQFA(QFA):
@@ -79,7 +80,7 @@ class MMQFA(QFA):
             for i in range(len(self.observable)):
                 for j in range(i + 1, len(self.observable)):
                     complementarias = complementarias and self.observable[i] * \
-                        self.observable[j] == zero
+                                      self.observable[j] == zero
             suma = self.observable[0] + self.observable[1] + self.observable[2]
             return son_proyecciones and complementarias and suma == eye(dim)
         else:

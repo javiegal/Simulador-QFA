@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import eye
+
+from .matriz_entrada import MatrizEntrada
 
 
 class Aceptacion(tk.LabelFrame):

@@ -1,9 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from vista.transformaciones import Transformaciones
-from vista.aceptacion import Aceptacion
-from vista.matriz_entrada import MatrizEntrada
 from sympy.matrices import Matrix, eye
+
+from .transformaciones import Transformaciones
+from .aceptacion import Aceptacion
+from .matriz_entrada import MatrizEntrada
 
 
 class VistaCrear(tk.Frame):
@@ -48,7 +49,7 @@ class VistaCrear(tk.Frame):
                                     command=self.cambiar_dim)
         boton_dimension.grid(row=0, column=5, padx=5)
 
-        ejemplos_label = tk.Label(frame2, text='Seleccionar ejemplo:')
+        ejemplos_label = tk.Label(frame2, text='Ejemplos:')
         ejemplos_label.grid(row=0, column=6, padx=5, pady=5, sticky='e')
 
         self.ejemplos = ['MOD3', 'MOD7', 'a*b*', 'NEQ', 'i', 's1', 's2',
